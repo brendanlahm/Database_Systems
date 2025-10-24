@@ -22,16 +22,35 @@ SELECT * FROM Students;
 
 -- Create table for Lecturers
 create table Lecturers(
-	name varchar(30),
-	Office varchar(30),
+	name varchar(30) primary key,
+	Office varchar(30) NOT NULL,
 	Tel varchar(30)
-)
+);
 
 EXEC sp_rename "Lecturers.name", "Name", "column";
 
+-- Add entries to the table
 insert into Lecturers (name, Office, Tel) values
 ('Draco', 'Dungeon', '666'),
-('Flippy','Tower', '999');
+('Flippy','Tower', '999'),
+('Jason', 'Nursery', NULL);
 
-select * from Lecturers;
+--drop table Lecturers;
+
+select * from Lecturers; -- Query the table
+
+
+-- Events Table
+drop table Events;
+
+create Table Events(
+	name varchar(30),
+	Semester int,
+	primary key (name, Semester)
+);
+
+insert into Events (name, Semester) values
+('First Day', 1)
+
+select * from Events; -- Query the table
 
