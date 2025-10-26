@@ -35,6 +35,10 @@ insert into Lecturers (name, Office, Tel) values
 ('Flippy','Tower', '999'),
 ('Jason', 'Nursery', NULL);
 
+UPDATE Lecturers
+set name = 'Draconius'
+where Office = 'Dungeon';
+
 --drop table Lecturers;
 
 select * from Lecturers; -- Query the table
@@ -45,12 +49,14 @@ drop table Events;
 
 create Table Events(
 	name varchar(30),
-	Semester int,
+	Semester char(4),
+	Room varchar(8),
+	Lecturer varchar(30) foreign key references Lecturers(name) on update cascade,
 	primary key (name, Semester)
 );
 
-insert into Events (name, Semester) values
-('First Day', 1)
+insert into Events (name, Semester, Room, Lecturer) values
+('First Day', 1234, 36, 'Draco')
 
 select * from Events; -- Query the table
 
