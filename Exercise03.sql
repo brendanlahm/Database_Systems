@@ -1,6 +1,6 @@
 ﻿-- Exercise 2
 
-drop table Students;
+--drop table Students;
 
 -- Create table for Students
 create table Students(
@@ -31,7 +31,7 @@ SELECT * FROM Students;
 
 -- Create table for Lecturers
 
-drop table Lecturers;
+--drop table Lecturers;
 
 create table Lecturers(
 	name varchar(30) primary key,
@@ -64,7 +64,7 @@ select * from Lecturers; -- Query the table
 
 -- Events Table
 
-drop table Events;
+--drop table Events;
 
 create Table Events(
 	name varchar(30),
@@ -90,7 +90,7 @@ select * from Events; -- Query the table
 
 -- Student_in_Event Table
 
-drop Table Student_in_Event;
+--drop Table Student_in_Event;
 
 create Table Student_in_Event(
 	ID int identity(10,2) primary key,
