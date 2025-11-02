@@ -1,4 +1,4 @@
-﻿-- Exercise 2
+﻿-- Exercise 3
 
 --drop table Students;
 
@@ -119,7 +119,12 @@ insert into Student_in_Event (Student, Event, Semester, Grade) values
 
 select * from Student_in_Event; -- Query the table
 
-delete from Student_in_Event where Event='Volleyball' and Grade>4.0; -- Remove failing Volleyball students
+-- Remove failing Volleyball grade
+update Student_in_Event
+set Grade = NULL
+where Event = 'Volleyball' and Grade > 4.0;
+
+--delete from Student_in_Event where Event='Volleyball' and Grade>4.0; -- Remove failing Volleyball students
 select * from Student_in_Event; -- Query the table
 
 -- Change Room # for Prof. Maria
