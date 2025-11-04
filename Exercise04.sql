@@ -1,6 +1,6 @@
 ﻿-- Exercise 4
 
--- Task 1: Simple selects
+---- Task 1: Simple selects
 select * from Lecturers;
 select * from Lecturers where Office like 'D%'; -- Select Lecturers with office in D Wing
 
@@ -63,6 +63,53 @@ inner join Events as E on SinE.Event = E.name and E.Semester = SinE.Semester
 where E.Semester = 'ss18';
 
 -- Part B skipped!
+
+-- Select a Text Column
+select
+	concat(
+		S.Name, 
+		' participated in the lecture ',
+		SinE.Event,
+		' during the ',
+		case 
+			when SinE.Semester='ss17' then 'summer semester 2017' 
+			when SinE.Semester='ws17' then 'winter semester 2017' 
+			when SinE.Semester='ss18' then 'summer semester 2018' 
+		end,
+		' and ',
+		case 
+			when SinE.Grade is null then 'obtained no grade so far.' 
+			when SinE.Grade<=4 then concat ( 'obtained the grade ' , SinE.Grade , ' Congratulations!') 
+			when SinE.Grade>4 then ' did not pass.' 
+		end) as 'Text'
+--select *
+from
+	Students as S 
+	inner join Student_in_Event as SinE on S.matriculation_number = SinE. Student
+where
+	SinE.Semester in ( 'ws17' , 'ss17' , 'ss18' );
+
+---- Task 3: Quantifiers and set operations
+select distinct 
+	L.Name, 
+	E.Name, 
+	concat ( 'Best Grade : ' , isnull(cast(SinE.Grade as varchar),'none')) 
+from 
+	Lecturers as L 
+	inner join Events as E on E.Lecturer=L.Name 
+	inner join Student_in_Event as SinE on SinE.Event = E.Name and SinE.Semester=E.Semester 
+where  
+	SinE.Grade <= all ( 
+							select Grade 
+							from Student_in_Event as SinE2 
+								inner join Events as E2 on SinE2.Event=E2.Name and SinE2. Semester=E2.Semester 
+								inner join Lecturers as L2 on E2.Lecturer=L2.Name 
+							where Grade is not null and E2.Name=E.Name and L2.Name=L.Name
+							);
+
+
+
+
 
 
 
