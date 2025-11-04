@@ -1,5 +1,6 @@
 ﻿-- Exercise 4
 
+-- Task 1: Simple selects
 select * from Lecturers;
 select * from Lecturers where Office like 'D%'; -- Select Lecturers with office in D Wing
 
@@ -47,6 +48,21 @@ from
 	Students
 where
 	datediff (year , Birthday ,CURRENT_TIMESTAMP) between 20 and 40;
+
+
+---- Task 2: Join and cross product
+-- Create a student room plan for the summer semester 2018 that shows who is in which event in which room
+select * from Events;
+select * from Student_in_Event; -- only event in ss18 is Volleyball!
+
+select S.name, S.matriculation_number, Event, E.Lecturer, E.Room
+--select *
+from Students as S 
+inner join Student_in_Event as SinE on S.matriculation_number = SinE.Student
+inner join Events as E on SinE.Event = E.name and E.Semester = SinE.Semester
+where E.Semester = 'ss18';
+
+-- Part B skipped!
 
 
 
