@@ -90,6 +90,7 @@ where
 	SinE.Semester in ( 'ws17' , 'ss17' , 'ss18' );
 
 ---- Task 3: Quantifiers and set operations
+-- Create a table which shows the best grade a lecturer has ever given for a specific event across all semesters
 select distinct 
 	L.Name, 
 	E.Name, 
