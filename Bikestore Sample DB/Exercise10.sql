@@ -23,6 +23,48 @@ order by sum
 
 -- Task 2: Aggregate Functions & Joins
 -- Determine turnover per store
+select stores.store_name, sum(order_items.list_price*(1-order_items.discount)+order_items.quantity) as 'Turnover ($)'
+from order_items join orders on (order_items.order_id=orders.order_id) join stores on (orders.store_id=stores.store_id)
+group by stores.store_name
+
+-- # orders per employee
+select staffs.staff_id, staffs.first_name, staffs.last_name, sum(order_items.quantity) as '# Orders'
+from staffs join orders on (staffs.staff_id=orders.staff_id) join order_items on (orders.order_id=order_items.order_id)
+group by staffs.staff_id, staffs.first_name, staffs.last_name;
+
+-- Task 3: Recursion
+-- List who manages who
+with my_staff (first_name, last_name, staff_id, employee_first_name, employee_second_name, employee_id, direct_report, reports_via, level) as(
+	select	p.first_name, 
+			p.last_name, 
+			p.staff_id, 
+			s.first_name, 
+			s.last_name, 
+			s.staff_id, 
+			cast('yes' as char(3)), 
+			cast('' as varchar(255)),
+			cast(0 as int) as level
+	from	staffs as p 
+			left join staffs as s on (p.staff_id=s.manager_id)
+
+	union all
+
+	select	p.first_name, 
+			p.last_name, 
+			p.staff_id, 
+			s.first_name, 
+			s.last_name, 
+			s.staff_id, 
+			cast('no' as char(3)), 
+			case	when direct_report='yes'	then cast(employee_first_name+' '+employee_second_name as varchar(255))
+					when direct_report='no'		then reports_via
+			end,
+			level=level+1
+	from my_staff as p join staffs as s on (p.employee_id=s.manager_id) where p.employee_id is not null
+)
+
+select * from my_staff order by last_name;
+select * from staffs;
 
 
 
